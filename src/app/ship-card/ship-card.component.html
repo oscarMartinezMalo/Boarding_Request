@@ -1,0 +1,24 @@
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar><img [src]="logoUrl()"></div>
+      <mat-card-title>{{ship.shortName}}</mat-card-title>
+      <mat-card-subtitle>{{ship.code}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="shipImageUrl()" alt="Photo of a Ship">
+    <mat-card-content>
+      <p>
+          Guests should arrive to the port no later than 60 minutes prior to the published sail time.
+           Guests should adhere to the published check-in windows, where applicable, 
+           that can be found in their E-docs (electronic documents) or during general boarding which depends on the ship’s sail time.
+    
+   </p>
+    </mat-card-content> 
+    <mat-card-actions>
+      <button mat-button (click)="newRequest()">CMD</button>
+      <button mat-button (click)="myRequests()">QUEUE CMD</button>
+    </mat-card-actions>
+  </mat-card>
+  
+  
+  

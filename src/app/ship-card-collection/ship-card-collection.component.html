@@ -1,0 +1,7 @@
+<div fxLayout="row wrap">
+    <div *ngFor="let ship of ships" fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column"
+      style="padding: 5px;">
+      <!-- material card here -->
+      <app-ship-card [ship]=ship></app-ship-card>
+    </div>
+  </div>
