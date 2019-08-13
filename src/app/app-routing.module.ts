@@ -8,7 +8,7 @@ import { RequestFormComponent } from './request-form/request-form.component';
 const routes: Routes = [
   { path: '', component: ShipCardCollectionComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'testing', component: RequestFormComponent  }
+  { path: 'request', component: RequestFormComponent  }
 ];
 
 @NgModule({

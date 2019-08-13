@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { shipTypes } from "./shipTypes.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [shipTypes]
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  urlLogo = '';
+  shipTypes: string[];
+  IMAGES_URL = './../../../assets/images/logos/black/';
+
   loginForm = this.fb.group({
     email: [null, [
       Validators.required,
@@ -23,10 +29,17 @@ export class LoginComponent implements OnInit {
       Validators.required
     ]]
   })
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private shipDropDown: shipTypes) { }
 
-  ngOnInit() {
-    
+   async ngOnInit() {
+    // Change the Logo image base on ship
+    this.loginForm.get('ship').valueChanges.subscribe(value =>{
+      // Set url if value is not empty
+      value ? this.urlLogo =  this.IMAGES_URL + value + '.svg' : this.urlLogo = '';
+    }); 
+
+    // Getting the data from a service
+    this.shipTypes = await this.shipDropDown.getShipTypes();
   }
 
   isValid(control) {
@@ -42,7 +55,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log("Call login service");
+      this.loginForm.reset();
     }
   }
 }
