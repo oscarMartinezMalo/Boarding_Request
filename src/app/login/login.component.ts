@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
 
       const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
+      dialogRef.disableClose = true;
       const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
       dialogRef.close();
       // alert(result.message);
