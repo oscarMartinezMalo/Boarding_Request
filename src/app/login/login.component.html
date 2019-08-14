@@ -3,7 +3,9 @@
         <mat-card-header>
             <mat-card-title [ngStyle]="{'color': 'var(--primary)'}">Login</mat-card-title>
         </mat-card-header>
+
         <img *ngIf="urlLogo" mat-card-image [src]="urlLogo" style="width: 50px; height: 60px;">
+
         <mat-card-content>
             <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="example-form" fxLayout="column"
                 style="width: 350px; text-align: center; padding: 20px;">
@@ -39,13 +41,17 @@
                     <span *ngIf="!shipTypes" matSuffix>
                         <mat-spinner [diameter]="15" style="height: 60px"></mat-spinner>
                     </span>
-                    
+
                     <mat-error *ngIf="loginForm.hasError('required', 'ship')">Ship is required </mat-error>
                 </mat-form-field>
 
-
                 <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Login</button>
+
             </form>
+
         </mat-card-content>
+        <!-- Load Image when the value of mat-select change -->
+        <img *ngIf="urlLogo" mat-card-image [src]="IMAGES_URL + this.loginForm.get('ship').value + '.svg'"
+            style="width: 20px; height: 20px;">
     </mat-card>
 </div>
