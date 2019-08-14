@@ -3,34 +3,40 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { SpinnerPopComponent, LoginComponent } from './login/login.component';
 import { HubClientService } from './ship-card-collection/HubClientService.service';
-
-import {MatCardModule, MatButtonModule, MatIconModule} from '@angular/material';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-
 import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-collection.component';
 import { ShipCardComponent } from './ship-card/ship-card.component';
-import { LoginComponent } from './login/login.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
 import { RequestFormComponent } from './request-form/request-form.component';
-import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LayoutModule } from '@angular/cdk/layout';
+
+import {
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatListModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatSelectModule,
+  MatInputModule,
+  MatCardModule,
+  MatButtonModule,
+  MatIconModule,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ShipCardCollectionComponent,
     ShipCardComponent,
+    SpinnerPopComponent,
     LoginComponent,
     NavBarComponent,
     RequestFormComponent
@@ -39,6 +45,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatDialogModule,
     FlexLayoutModule,
     MatCardModule,
     MatButtonModule,
@@ -53,7 +60,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatProgressSpinnerModule
   ],
-  providers: [ HubClientService ],
+  entryComponents: [
+    LoginComponent,
+    SpinnerPopComponent
+  ],
+  providers: [HubClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
