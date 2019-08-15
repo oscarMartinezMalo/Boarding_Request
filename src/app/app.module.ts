@@ -8,7 +8,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { SpinnerPopComponent, LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/login.component';
+import { SpinnerPopComponent } from './spinner-pop/spinner-pop.component';
 import { HubClientService } from './ship-card-collection/HubClientService.service';
 import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-collection.component';
 import { ShipCardComponent } from './ship-card/ship-card.component';
@@ -26,8 +27,7 @@ import {
   MatCardModule,
   MatButtonModule,
   MatIconModule,
-  MatDialogModule,
-  MatDialogRef
+  MatDialogModule
 } from '@angular/material';
 
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ShipTypes from './shipTypes.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
+import { SpinnerPopComponent } from '../spinner-pop/spinner-pop.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +33,12 @@ export class LoginComponent implements OnInit {
     ]]
   });
 
-  constructor(private fb: FormBuilder, private loginService: ShipTypes.ShipTypes, private dialog: MatDialog) { }
+  constructor(
+    private fb: FormBuilder,
+    private loginService: ShipTypes.ShipTypes,
+    private dialog: MatDialog,
+    private router: Router,
+  ) { }
 
   async ngOnInit() {
     // Change the Logo image base on ship
@@ -59,31 +66,21 @@ export class LoginComponent implements OnInit {
   async onSubmit(): Promise<any> {
 
     if (this.loginForm.valid) {
-
+      // Open spinner and set it to disable
       const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
       dialogRef.disableClose = true;
+
+      // Get login boolean from the service API
       const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
+
+      // Close spinner after get respond from the API
       dialogRef.close();
-      // alert(result.message);
+
       dialogRef.afterClosed().subscribe(() => {
-        alert(result.message);
+        console.log(result.message);
+        this.router.navigate(['/request']);
       });
       this.loginForm.reset();
     }
   }
-}
-
-@Component({
-  selector: 'app-spinner-pop',
-  templateUrl: 'spinner-pop.html'
-})
-
-export class SpinnerPopComponent {
-
-  constructor(public dialogRef: MatDialogRef<SpinnerPopComponent>) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }
