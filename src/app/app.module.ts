@@ -8,13 +8,21 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { SpinnerPopComponent } from './spinner-pop/spinner-pop.component';
 import { HubClientService } from './ship-card-collection/HubClientService.service';
 import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-collection.component';
 import { ShipCardComponent } from './ship-card/ship-card.component';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { LayoutModule } from '@angular/cdk/layout';
+
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 
 import {
   MatProgressSpinnerModule,
@@ -27,7 +35,8 @@ import {
   MatCardModule,
   MatButtonModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 
@@ -58,7 +67,13 @@ import {
     MatListModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebase, 'ng-wallet-expenses' ),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    AngularFireDatabaseModule
   ],
   entryComponents: [
     LoginComponent,

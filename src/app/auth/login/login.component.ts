@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as ShipTypes from './shipTypes.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
-import { SpinnerPopComponent } from '../spinner-pop/spinner-pop.component';
+import { SpinnerPopComponent } from '../../spinner-pop/spinner-pop.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: ShipTypes.ShipTypes,
     private dialog: MatDialog,
+    private authService: AuthService,
     private router: Router,
   ) { }
 
@@ -71,16 +74,16 @@ export class LoginComponent implements OnInit {
       dialogRef.disableClose = true;
 
       // Get login boolean from the service API
-      const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
+      // const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
+      console.log(this.authService.emailPasswordSigninUser(this.loginForm.value));
+      this.authService.emailPasswordSigninUser(this.loginForm.value);
 
       // Close spinner after get respond from the API
       dialogRef.close();
 
       dialogRef.afterClosed().subscribe(() => {
-        console.log(result.message);
-        this.router.navigate(['/request']);
+        // this.loginForm.reset();
       });
-      this.loginForm.reset();
     }
   }
 }

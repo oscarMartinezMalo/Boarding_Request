@@ -19,7 +19,7 @@ export class ShipTypes {
             setTimeout(() => {
                 const shipTypesDropdown = ['Z', 'R', 'C'];
                 res(shipTypesDropdown);
-            }, 5000);
+            }, 1000);
         });
     }
 
@@ -30,7 +30,7 @@ export class ShipTypes {
                     {status: 'error',
                     message: 'Login failed'}
                 );
-            }, 3000);
+            }, 1000);
         });
     }
 }

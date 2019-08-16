@@ -49,9 +49,11 @@
 
             </form>
 
+            <!-- Load Image when the value of mat-select change -->
+            <mat-card-footer fxLayout="row" fxLayoutAlign="end end">
+                <img *ngIf="urlLogo" mat-card-image [src]="IMAGES_URL + this.loginForm.get('ship').value + '.svg'"
+                    style="width: 20px; height: 20px; margin: 0px 20px 20px 0px;">
+            </mat-card-footer>
         </mat-card-content>
-        <!-- Load Image when the value of mat-select change -->
-        <img *ngIf="urlLogo" mat-card-image [src]="IMAGES_URL + this.loginForm.get('ship').value + '.svg'"
-            style="width: 20px; height: 20px;">
     </mat-card>
 </div>
