@@ -13,6 +13,7 @@ import { take } from 'rxjs/operators';
 
 import { User } from './user';
 import { BehaviorSubject } from 'rxjs';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 interface IUserLogin {
   email: string;
@@ -46,22 +47,29 @@ export class AuthService {
     });
   }
 
-  emailPasswordSigninUser(provider: IUserLogin) {
+  async emailPasswordSigninUser(provider: IUserLogin) {
+    // Delay the loggin process
+    await new Promise((res: any, req: any) => {
+      setTimeout(() => res('Slow connection'), 3000);
+    }).then(resp => console.log(resp));
 
-    this.afAuth.auth.signInWithEmailAndPassword(provider.email, provider.password).
+    let successLogin = false;
+
+    successLogin = await this.afAuth.auth.signInWithEmailAndPassword(provider.email, provider.password).
       then((credential) => {
         // Email verification
         if (credential.user.emailVerified) {
           this.updateUserData(credential.user);
           this.router.navigate(['/request']);
-        } else {
-          this.displayMessaggeSnackBar('Please validate your email address. Check your inbox', 'X');
-          return false;
+          return true;
         }
       }).catch(
         error => {
           this.displayMessaggeSnackBar(error.message, error.code);
+          return false;
         });
+
+    return successLogin;
   }
 
   updateUserData(authData): void {

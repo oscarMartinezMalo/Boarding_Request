@@ -66,24 +66,26 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  async onSubmit(): Promise<any> {
+  async onSubmit() {
 
     if (this.loginForm.valid) {
+
       // Open spinner and set it to disable
       const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
       dialogRef.disableClose = true;
 
       // Get login boolean from the service API
       // const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
-      console.log(this.authService.emailPasswordSigninUser(this.loginForm.value));
-      this.authService.emailPasswordSigninUser(this.loginForm.value);
+      const logginSuccess = await this.authService.emailPasswordSigninUser(this.loginForm.value);
+
+      if (!logginSuccess) {
+        this.loginForm.reset();
+      }
 
       // Close spinner after get respond from the API
       dialogRef.close();
 
-      dialogRef.afterClosed().subscribe(() => {
-        // this.loginForm.reset();
-      });
+      dialogRef.afterClosed().subscribe(() => { });
     }
   }
 }
