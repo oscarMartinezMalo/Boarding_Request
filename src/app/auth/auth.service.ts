@@ -6,14 +6,12 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
-import { Observable, EMPTY } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { User } from './user';
 import { BehaviorSubject } from 'rxjs';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 interface IUserLogin {
   email: string;

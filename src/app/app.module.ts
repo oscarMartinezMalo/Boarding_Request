@@ -13,7 +13,7 @@ import { SpinnerPopComponent } from './spinner-pop/spinner-pop.component';
 import { HubClientService } from './ship-card-collection/HubClientService.service';
 import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-collection.component';
 import { ShipCardComponent } from './ship-card/ship-card.component';
-import { RequestFormComponent } from './request-form/request-form.component';
+import { RequestFormComponent } from './request/request-form/request-form.component';
 import { LayoutModule } from '@angular/cdk/layout';
 
 import { AngularFireModule } from '@angular/fire';

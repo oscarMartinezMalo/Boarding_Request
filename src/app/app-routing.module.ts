@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-collection.component';
 import { LoginComponent } from './auth/login/login.component';
-import { RequestFormComponent } from './request-form/request-form.component';
+import { RequestFormComponent } from './request/request-form/request-form.component';
 
 
 const routes: Routes = [

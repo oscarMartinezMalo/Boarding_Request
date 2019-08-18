@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { RequestService } from '../request.service';
 
 @Component({
   selector: 'app-request-form',
@@ -27,8 +28,8 @@ export class RequestFormComponent {
     { value: 'Employee Business' },
     { value: 'Large Group' },
     { value: 'One Time Only Visit' },
-    { value: 'Vendor/ Contractor' },];
-    
+    { value: 'Vendor/ Contractor' }];
+
   states = [
     { name: 'Alabama', abbreviation: 'AL' },
     { name: 'Alaska', abbreviation: 'AK' },
@@ -91,9 +92,9 @@ export class RequestFormComponent {
     { name: 'Wyoming', abbreviation: 'WY' }
   ];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private request: RequestService ) { }
 
   onSubmit() {
-    alert('Thanks!');
+    this.request.createRequest( this.addressForm.value );
   }
 }
