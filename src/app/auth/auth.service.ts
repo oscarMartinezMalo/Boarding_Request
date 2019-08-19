@@ -6,12 +6,14 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 import { of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { User } from './user';
 import { BehaviorSubject } from 'rxjs';
+import { AuthorizationRoles } from './authorization-roles';
+import * as _ from 'lodash';
 
 interface IUserLogin {
   email: string;
@@ -22,7 +24,7 @@ interface IUserLogin {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends AuthorizationRoles {
 
   user: BehaviorSubject<User> = new BehaviorSubject(null);
 
@@ -31,6 +33,12 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router,
     private snackBar: MatSnackBar) {
+    super();
+
+    this.user.pipe(map(user => {
+      // set an array of use roles, ie ['admin', 'autor,...]
+      return this.userRoles = _.keys(_.get(user, 'roles'));
+    })).subscribe();
 
     this.afAuth.authState.pipe(
       switchMap(user => {
@@ -83,11 +91,19 @@ export class AuthService {
   }
 
   logOut() {
+    // console.log(this.afAuth.auth);
     this.afAuth.auth.signOut().then(() => {
+      this.user.next(null);
       this.router.navigate(['/login']);
     }).catch((error) => {
       this.displayMessaggeSnackBar(error.message, error.code);
     });
+  }
+
+  isAuthenticated() {
+    return !!this.user.value;
+    // Check if the cookie exist if not exist, delete the localStorage User and return false  
+    // return !!this.user; // Double Bang !! used to convert the value return in to a boolean   
   }
 
   displayMessaggeSnackBar(message: string, code: string) {

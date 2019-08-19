@@ -48,8 +48,7 @@ import {
     SpinnerPopComponent,
     LoginComponent,
     NavBarComponent,
-    RequestFormComponent
-  ],
+    RequestFormComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
