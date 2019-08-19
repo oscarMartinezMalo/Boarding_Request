@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import * as firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth/auth.service';
 import { map } from 'rxjs/operators';
@@ -15,12 +15,15 @@ import { FleetRequest } from './fleet-request';
 export class RequestService {
 
   userRoles: Array<string>; // roles of the currently logged user
+  userId: string;
 
   constructor(private auth: AuthService, private afs: AngularFirestore) {
     auth.user.pipe(map(user => {
+      this.userId = _.get(user, 'uid');
       // set an array of use roles, ie ['admin', 'autor,...]
       return this.userRoles = _.keys(_.get(user, 'roles'));
     })).subscribe();
+
   }
 
   getRequests() {
@@ -59,11 +62,14 @@ export class RequestService {
     return !_.isEmpty(_.intersection(allowedRoles, this.userRoles));
   }
 
+  // getItemsList(): AngularFirestoreCollection<
+
   //// User Actions
 
   createRequest(fleetRequest) {
-    if (this.canCreate) {
-      this.afs.doc<FleetRequest>(`fleetRequests`).set(fleetRequest);
+    if (this.canCreate && this.userId) {
+      // Add a new document in collection "fleetRequests" with ID 'userId'
+      this.afs.collection<FleetRequest>(`fleetRequests`).doc(`${this.userId}`).collection<Request>(`requests`).add(fleetRequest);
     } else {
       console.log('action prevented!');
     }
