@@ -15,7 +15,10 @@ export class RequestService {
 
   userId: string;
 
-  constructor(private afs: AngularFirestore, private auth: AuthService) {
+  constructor(
+    private afs: AngularFirestore,
+    private auth: AuthService,
+    private snackBar: MatSnackBar) {
 
     auth.user.pipe(map(user => {
       this.userId = _.get(user, 'uid');
@@ -32,11 +35,14 @@ export class RequestService {
 
   //// User Actions
 
-  createRequest(fleetRequest) {
-    if ( this.auth.canCreate  && this.userId) {
+  async createRequest(fleetRequest: FleetRequest) {
+    console.log("hel");
+    if (this.auth.canCreate && this.userId) {
       // Add a new document in collection "fleetRequests" with document having 'userId'
       fleetRequest.userId = this.userId;
-      this.afs.collection<FleetRequest>(`fleetRequests`).add(fleetRequest);
+      fleetRequest.state = 'pending';
+      const response = await this.afs.collection<FleetRequest>(`fleetRequests`).add(fleetRequest);
+      this.displayMessaggeSnackBar('Request sended', response.id);
     } else {
       console.log('action prevented!');
     }
@@ -56,5 +62,11 @@ export class RequestService {
     } else {
       console.log('action prevented!');
     }
+  }
+
+  displayMessaggeSnackBar(message: string, code: string) {
+    this.snackBar.open(message, code, {
+      duration: 3000,
+    });
   }
 }

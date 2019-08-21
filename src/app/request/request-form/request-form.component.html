@@ -1,8 +1,8 @@
 <div class="mat-wrapper" fxLayout="row" fxLayoutAlign="center center">
-  <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <form [formGroup]="requestForm" novalidate (ngSubmit)="onSubmit()">
     <mat-card class="shipping-card">
       <mat-card-header>
-        <mat-card-title>Request Type</mat-card-title>
+        <mat-card-title>Create New Request</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <div class="row">
@@ -13,94 +13,122 @@
                   {{ requestType.value }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['requestType'].hasError('required')">
+              <mat-error *ngIf="requestForm.controls['requestType'].hasError('required')">
                 Request Type <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
         </div>
+
+
+        <div class="row">
+          <!-- Expansion Panel -->
+          <mat-accordion class="example-headers-align">
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  On Behalf of
+                </mat-panel-title>
+                <mat-panel-description>
+                  Type your name and age
+                  <mat-icon>account_circle</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <input matInput placeholder="First name" formControlName="firstName">
+                <mat-error *ngIf="requestForm.controls['firstName'].hasError('required')">
+                  First name is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Last name" formControlName="lastName">
+                <mat-error *ngIf="requestForm.controls['lastName'].hasError('required')">
+                  Last name is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-action-row>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Location/Port
+                </mat-panel-title>
+                <mat-panel-description>
+                  Type the country name
+                  <mat-icon>map</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <input matInput formControlName="country" placeholder="Country">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput #port placeholder="Port Number" type="number" formControlName="portNumber"
+                  maxlength="5">
+                <mat-hint align="end">{{port.value.length}} / 5</mat-hint>
+              </mat-form-field>
+
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">Next</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Boarding
+                </mat-panel-title>
+                <mat-panel-description>
+                  Inform the boarding Time and Date
+                  <mat-icon>date_range</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <mat-form-field>
+                <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" formControlName="boardingDate">
+              </mat-form-field>
+              <mat-datepicker #picker></mat-datepicker>
+
+              <mat-action-row>
+                <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                <button mat-button color="primary" (click)="nextStep()">End</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+          </mat-accordion>
+        </div>
+
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
-              <input matInput placeholder="First name" formControlName="firstName">
-              <mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
-                First name is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Last name" formControlName="lastName">
-              <mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
-                Last name is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <textarea matInput placeholder="Address" formControlName="address"></textarea>
-              <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
-                Address is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row" *ngIf="!hasUnitNumber">
-          <div class="col">
-            <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
-              + Add C/O, Apt, Suite, Unit
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngIf="hasUnitNumber">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="City" formControlName="city">
-              <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-                City is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field class="full-width">
-              <mat-select placeholder="State" formControlName="state">
-                <mat-option *ngFor="let state of states" [value]="state.abbreviation">
-                  {{ state.name }}
+              <mat-select placeholder="Ship Contanct" formControlName="shipContact">
+                <mat-option *ngFor="let shipContact of shipContacts" [value]="shipContact.abbreviation">
+                  {{ shipContact.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
-                State is <strong>required</strong>
+              <mat-error *ngIf="requestForm.controls['shipContact'].hasError('required')">
+                Ship Contact is <strong>required</strong>
               </mat-error>
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number"
-                formControlName="postalCode">
-              <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-            </mat-form-field>
-          </div>
+
+        <div class="col" class="full-width">
+          <label id="example-radio-group-label">Special Needs</label>
+          <mat-radio-group class="row" formControlName="specialNeeds">
+            <mat-radio-button value="yes" style="padding-right: 5px;">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+          </mat-radio-group>
         </div>
-        <div class="row">
-          <div class="col">
-            <mat-radio-group formControlName="shipping">
-              <mat-radio-button value="free">Free Shipping</mat-radio-button>
-              <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
-              <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
+
       </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button color="primary" type="submit">Submit</button>

@@ -1,11 +1,12 @@
 export class FleetRequest {
-    address: string;
-    address2: string;
-    city: string;
+    requestType: string;
     firstName: string;
     lastName: string;
-    postalCode: string;
-    requestType: string;
-    shipping: string;
+    country: string;
+    portNumber: string;
+    boardingDate: string;
+    ShipContact: string;
+    specialNeeds: string;
+    userId: string;
     state: string;
 }

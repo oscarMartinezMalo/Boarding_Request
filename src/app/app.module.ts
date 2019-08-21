@@ -23,6 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import {
   MatProgressSpinnerModule,
@@ -36,9 +37,11 @@ import {
   MatButtonModule,
   MatIconModule,
   MatDialogModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatExpansionModule,
+  MatNativeDateModule
 } from '@angular/material';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,7 @@ import {
     SpinnerPopComponent,
     LoginComponent,
     NavBarComponent,
-    RequestFormComponent ],
+    RequestFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -68,11 +71,15 @@ import {
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    AngularFireModule.initializeApp(environment.firebase, 'ng-wallet-expenses' ),
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    AngularFireModule.initializeApp(environment.firebase, 'ng-wallet-expenses'),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    NgxMaterialTimepickerModule
   ],
   entryComponents: [
     LoginComponent,

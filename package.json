@@ -25,6 +25,7 @@
     "@angular/router": "~8.2.0",
     "firebase": "^6.4.0",
     "lodash": "^4.17.15",
+    "ngx-material-timepicker": "^4.0.2",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

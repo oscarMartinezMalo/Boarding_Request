@@ -74,12 +74,13 @@ export class LoginComponent implements OnInit {
       const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
       dialogRef.disableClose = true;
 
-      const loggedinSuccess = await this.authService.emailPasswordSigninUser(this.loginForm.value);
-
-      // Delay one second until the user get his final value
-      setTimeout(() => {
+      this.authService.emailPasswordSigninUser(this.loginForm.value).then(loggedinSuccess => {
+        console.log(loggedinSuccess);
         loggedinSuccess ? this.router.navigate(['/request']) : this.loginForm.reset();
-      }, 1000);
+      });
+
+
+
       dialogRef.close();  // Close spinner after get respond from the API
     }
   }
