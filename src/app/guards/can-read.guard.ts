@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, map, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
@@ -9,7 +9,8 @@ import { AuthService } from '../auth/auth.service';
 })
 export class CanReadGuard implements CanActivate {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService,
+              private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -20,7 +21,8 @@ export class CanReadGuard implements CanActivate {
       map(user => user && this.auth.canRead ? true : false),
       tap(isAuthor => {
         if (!isAuthor) {
-          console.error('Access denied - Must have permission to view content');
+          this.router.navigate(['/login']);
+          // this.auth.displayMessaggeSnackBar('Access denied - Must have permission to view content', 'X');
         }
       })
     );

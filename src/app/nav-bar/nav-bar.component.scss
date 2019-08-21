@@ -1,3 +1,6 @@
+.mat-toolbar {
+  font-size: 15px !important;
+}
 .sidenav-container {
   height: 100%;
 }
@@ -14,4 +17,18 @@
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+.hidden{
+  display: none;
+}
+
+.logo{
+  width: 30px;
+  padding-top: 137px;
+  margin: 0px !important;
 }

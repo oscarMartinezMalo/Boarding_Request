@@ -7,10 +7,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Router } from '@angular/router';
 import { switchMap, map, tap } from 'rxjs/operators';
-import { of, throwError } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { User } from './user';
+import { User } from './user.model';
 import { BehaviorSubject } from 'rxjs';
 import { AuthorizationRoles } from './authorization-roles';
 import * as _ from 'lodash';
@@ -42,6 +42,7 @@ export class AuthService extends AuthorizationRoles {
 
     this.afAuth.authState.pipe(
       switchMap(user => {
+
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
@@ -49,40 +50,43 @@ export class AuthService extends AuthorizationRoles {
         }
       })
     ).subscribe(user => {
-      this.user.next(user);
+      // console.log(user);
+      if (user && (user.roles.admin || user.roles.author)) {
+        this.user.next(user);
+      } else {
+        this.user.next(null);
+      }
     });
   }
 
-  async emailPasswordSigninUser(provider: IUserLogin) {
+  async  emailPasswordSigninUser(provider: IUserLogin) {
+
     // Delay the loggin process
-    await new Promise((res: any, req: any) => {
-      setTimeout(() => res('Slow connection'), 3000);
-    }).then(resp => console.log(resp));
+    // await new Promise((res: any, req: any) => {
+    //   setTimeout(() => res('Slow connection'), 3000);
+    // }).then();
 
-    let successLogin = false;
-
-    successLogin = await this.afAuth.auth.signInWithEmailAndPassword(provider.email, provider.password).
+    return this.afAuth.auth.signInWithEmailAndPassword(provider.email, provider.password).
       then((credential) => {
         // Email verification
         if (credential.user.emailVerified) {
           this.updateUserData(credential.user);
-          this.router.navigate(['/request']);
           return true;
+        } else {
+          return false;
         }
       }).catch(
         error => {
           this.displayMessaggeSnackBar(error.message, error.code);
           return false;
         });
-
-    return successLogin;
   }
 
-  updateUserData(authData): void {
+  async updateUserData(authData) {
     const userData = new User(authData);
 
     const ref = this.afs.doc<User>(`users/${authData.uid}`);
-    ref.valueChanges().pipe(take(1))
+    await ref.valueChanges().pipe(take(1))
       .subscribe(user => {
         if (!user.roles) {
           ref.update(Object.assign({}, userData));
@@ -90,20 +94,19 @@ export class AuthService extends AuthorizationRoles {
       });
   }
 
-  logOut() {
-    // console.log(this.afAuth.auth);
-    this.afAuth.auth.signOut().then(() => {
-      this.user.next(null);
-      this.router.navigate(['/login']);
-    }).catch((error) => {
-      this.displayMessaggeSnackBar(error.message, error.code);
-    });
+  async logOut() {
+    await this.afAuth.auth.signOut();
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated() {
-    return !!this.user.value;
-    // Check if the cookie exist if not exist, delete the localStorage User and return false  
-    // return !!this.user; // Double Bang !! used to convert the value return in to a boolean   
+    return this.user.pipe(map(user => {
+      if (user) {
+        return true;
+      } else {
+         return false;
+        }
+    }));
   }
 
   displayMessaggeSnackBar(message: string, code: string) {

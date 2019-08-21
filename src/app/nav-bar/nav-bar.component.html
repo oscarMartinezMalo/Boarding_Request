@@ -1,26 +1,45 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [ngClass]="{hidden: !(isHandset$ | async) }"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <button mat-raised-button color="primary" (click)="onLogout()" type="button">LogOut</button>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+
+      <ng-template [ngIf]='!(auth.user | async)'>
+        <!-- <a mat-list-item routerLink="/" routerLinkActive="active" (click)="onLogout();drawer.toggle()">Log Out</a> -->
+        <a mat-list-item routerLink="/login" routerLinkActive="active" (click)="drawer.toggle()">Login</a>
+      </ng-template>
+
+      <ng-template [ngIf]='(auth.user | async)'>
+        <a mat-list-item routerLink="/" (click)='onLogout(); drawer.toggle()'>Log Out</a>
+        <a mat-list-item routerLink="/request" routerLinkActive="active" (click)="drawer.toggle()">Request</a>
+      </ng-template>
+
     </mat-nav-list>
   </mat-sidenav>
+  
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>flexLayout</span>
+      <!-- <span>
+        <img class="logo" mat-card-image src="../../assets/images/logos/navLogo.jpg"alt="FVR">
+      </span> -->
+      <span class="spacer"></span>
+      <a class="user-email-style" *ngIf='auth.user | async as user'>{{user.email}}</a>
+      <span class="spacer"></span>
+      
+      <ng-template [ngIf]='!(auth.user | async)'>
+        <a [routerLink]="['/login']" routerLinkActive="active" style="color:whitesmoke" *ngIf="!(isHandset$ | async)">Login</a>
+      </ng-template>
+      <ng-template [ngIf]='(auth.user | async)'>
+        <a routerLink="/" routerLinkActive="active" style="color:whitesmoke"  (click)="onLogout();drawer.toggle()" *ngIf="!(isHandset$ | async)">Logout</a>
+      </ng-template>
+      <span>
+        <img class="logo" mat-card-image src="../../assets/images/logos/navLogo.jpg"alt="FVR">
+      </span>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

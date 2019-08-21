@@ -4,17 +4,31 @@ import { ShipCardCollectionComponent } from './ship-card-collection/ship-card-co
 import { LoginComponent } from './auth/login/login.component';
 import { RequestFormComponent } from './request/request-form/request-form.component';
 
-import { AdminGuard } from './core/admin.guard';
-import { CanReadGuard } from './core/can-read.guard';
-import { AuthGuard } from './core/auth.guard';
-import { AuthorGuard } from './core/author.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { CanReadGuard } from './guards/can-read.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { WorkerGuard } from './guards/worker.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'request', component: RequestFormComponent, canActivate: [AuthGuard] },
-  { path: 'ships', component: ShipCardCollectionComponent, canActivate: [AdminGuard] }
+  {
+    path: '',
+    component: LoginComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'request',
+    component: RequestFormComponent,
+    canActivate: [WorkerGuard]
+  },
+  {
+    path: 'ships',
+    component: ShipCardCollectionComponent,
+    canActivate: [AdminGuard]
+  }
 ];
 
 @NgModule({

@@ -5,7 +5,8 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { SpinnerPopComponent } from '../../spinner-pop/spinner-pop.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, take, tap, map } from 'rxjs/operators';
+import { Subscriber, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -66,26 +67,20 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  async onSubmit() {
-
+  async  onSubmit() {
     if (this.loginForm.valid) {
 
       // Open spinner and set it to disable
       const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
       dialogRef.disableClose = true;
 
-      // Get login boolean from the service API
-      // const result: ShipTypes.IRespond = await this.loginService.login(this.loginForm.value);
-      const logginSuccess = await this.authService.emailPasswordSigninUser(this.loginForm.value);
+      const loggedinSuccess = await this.authService.emailPasswordSigninUser(this.loginForm.value);
 
-      if (!logginSuccess) {
-        this.loginForm.reset();
-      }
-
-      // Close spinner after get respond from the API
-      dialogRef.close();
-
-      dialogRef.afterClosed().subscribe(() => { });
+      // Delay one second until the user get his final value
+      setTimeout(() => {
+        loggedinSuccess ? this.router.navigate(['/request']) : this.loginForm.reset();
+      }, 1000);
+      dialogRef.close();  // Close spinner after get respond from the API
     }
   }
 }

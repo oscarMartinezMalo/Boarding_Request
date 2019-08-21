@@ -1,6 +1,6 @@
 export interface Roles {
     reader: boolean;
-    author?: boolean;
+    worker?: boolean;
     admin?: boolean;
 }
 
