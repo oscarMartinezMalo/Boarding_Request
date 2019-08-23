@@ -1,3 +1,11 @@
+export enum RolesEnum {
+    'reader',
+    'employee',
+    'contractor',
+    'vendor',
+    'admin'
+}
+
 export interface Roles {
     reader: boolean;
     employee?: boolean;

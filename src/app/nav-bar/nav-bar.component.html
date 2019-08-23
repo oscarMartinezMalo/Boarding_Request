@@ -17,29 +17,59 @@
 
     </mat-nav-list>
   </mat-sidenav>
-  
+
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+
+    <mat-toolbar color="secondary">
+
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <!-- <span>
-        <img class="logo" mat-card-image src="../../assets/images/logos/navLogo.jpg"alt="FVR">
-      </span> -->
+
       <span class="spacer"></span>
-      <a class="user-email-style" *ngIf='auth.user | async as user'>{{user.email}}</a>
+
+      <img src="../../assets/images/logos/fvr-logo.svg" alt="FVR">
+
       <span class="spacer"></span>
-      
-      <ng-template [ngIf]='!(auth.user | async)'>
-        <a [routerLink]="['/login']" routerLinkActive="active" style="color:whitesmoke" *ngIf="!(isHandset$ | async)">Login</a>
+      <a class="user-email-style" *ngIf='(isHandset$ | async) === false && (auth.user | async) as user'>{{user.email}}</a>
+
+      <!-- Vertical dots -->
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button type="button" [routerLink]="['/login']" *ngIf='!(auth.user | async)' routerLinkActive="active"
+          mat-menu-item>
+          <mat-icon>account_circle</mat-icon>
+          <span>Login</span>
+        </button>
+
+        <button type="button" routerLink="/" *ngIf='(auth.user | async)' (click)="onLogout();drawer.toggle()"
+          mat-menu-item>
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+
+        <!-- <button type="button" [routerLink]="['/request']" mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button> -->
+      </mat-menu>
+      <!-- Vertical dots End -->
+
+      <!-- <ng-template [ngIf]='!(auth.user | async)'>
+        <a [routerLink]="['/login']" routerLinkActive="active" style="color:whitesmoke"
+          *ngIf="!(isHandset$ | async)">Login</a>
       </ng-template>
       <ng-template [ngIf]='(auth.user | async)'>
-        <a routerLink="/" routerLinkActive="active" style="color:whitesmoke"  (click)="onLogout();drawer.toggle()" *ngIf="!(isHandset$ | async)">Logout</a>
+        <a routerLink="/" routerLinkActive="active" style="color:whitesmoke" (click)="onLogout();drawer.toggle()"
+          *ngIf="!(isHandset$ | async)">Logout</a>
       </ng-template>
       <span>
-        <img class="logo" mat-card-image src="../../assets/images/logos/navLogo.jpg"alt="FVR">
-      </span>
+        <img class="logo" mat-card-image src="../../assets/images/logos/navLogo.jpg" alt="FVR">
+      </span> -->
+
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

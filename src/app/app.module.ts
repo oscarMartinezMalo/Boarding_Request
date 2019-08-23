@@ -39,7 +39,8 @@ import {
   MatDialogModule,
   MatSnackBarModule,
   MatExpansionModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatMenuModule
 } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
@@ -52,6 +53,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     LoginComponent,
     NavBarComponent,
     RequestFormComponent],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -74,6 +76,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatNativeDateModule,
     MatExpansionModule,
     MatDatepickerModule,
+    MatMenuModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng-wallet-expenses'),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
