@@ -7,14 +7,14 @@ import { take, map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class WorkerGuard implements CanActivate {
+export class EmployeeGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-    return this.auth.isWorker().then(isWorker => {
+    return this.auth.isEmployee().then(isWorker => {
       console.log(isWorker);
       if (isWorker) {
         return true;
@@ -24,21 +24,5 @@ export class WorkerGuard implements CanActivate {
         return false;
       }
     });
-
-    // if (this.auth.isWorker()) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    //  return this.auth.user.pipe(
-    //     take(1),
-    //     map(user => user.roles.worker),
-    //     tap(isWorker => {
-    //       if (!isWorker) {
-    //         this.router.navigate(['/login']);
-    //         this.auth.displayMessaggeSnackBar('Access denied - Worker only', 'X');
-    //       }
-    //     })
-    //   );
   }
 }

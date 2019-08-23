@@ -51,7 +51,7 @@ export class AuthService extends AuthorizationRoles {
       })
     ).subscribe(user => {
       // console.log(user);
-      if (user && (user.roles.admin || user.roles.author || user.roles.worker)) {
+      if (user && (user.roles.admin || user.roles.vendor || user.roles.employee)) {
         this.user.next(user);
       } else {
         this.user.next(null);
@@ -109,12 +109,12 @@ export class AuthService extends AuthorizationRoles {
     }));
   }
 
-  isWorker() {
+  isEmployee() {
     // Take a second to reach the services
     return new Promise((resolve, request) => {
       setTimeout(() => {
         this.user.subscribe(user => {
-          resolve(user && user.roles.worker ? true : false);
+          resolve(user && user.roles.employee ? true : false);
         });
       }, 1000);
     });

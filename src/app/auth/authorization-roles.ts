@@ -3,21 +3,24 @@ import * as _ from 'lodash';
 export abstract class AuthorizationRoles {
     userRoles: Array<string>; // roles of the currently logged user
 
-    constructor() {}
+    constructor() { }
+
+    //// Roles
+    // reader | employee? | contractor? | vendor? | admin?
 
     ///// Authorization Logic /////
     get canCreate(): boolean {
-        const allowed = ['admin', 'worker'];
+        const allowed = ['admin', 'employee', 'vendor'];
         return this.matchingRole(allowed);
     }
 
     get canRead(): boolean {
-        const allowed = ['admin', 'worker', 'reader'];
+        const allowed = ['admin', 'employee', 'vendor', 'reader'];
         return this.matchingRole(allowed);
     }
 
     get canUpdate(): boolean {
-        const allowed = ['admin'];
+        const allowed = ['admin', 'vendor'];
         return this.matchingRole(allowed);
     }
 

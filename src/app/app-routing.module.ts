@@ -7,7 +7,7 @@ import { RequestFormComponent } from './request/request-form/request-form.compon
 import { AdminGuard } from './guards/admin.guard';
 import { CanReadGuard } from './guards/can-read.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { WorkerGuard } from './guards/worker.guard';
+import { EmployeeGuard } from './guards/employee.guard';
 
 
 const routes: Routes = [
@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'request',
     component: RequestFormComponent,
-    canActivate: [WorkerGuard]
+    canActivate: [EmployeeGuard]
   },
   {
     path: 'ships',

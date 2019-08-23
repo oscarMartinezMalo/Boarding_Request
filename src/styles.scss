@@ -13,7 +13,7 @@ body,html {
     margin: 0px;
 }
 
-.mat-dialog-container {
-  background-color: transparent !important;
-   box-shadow: none !important;
-}
+.spinner-no-background-color .mat-dialog-container {
+  background-color: transparent;
+  box-shadow: none;
+} 

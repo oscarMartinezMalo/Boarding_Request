@@ -1,6 +1,8 @@
 export interface Roles {
     reader: boolean;
-    worker?: boolean;
+    employee?: boolean;
+    contractor?: boolean;
+    vendor?: boolean;
     admin?: boolean;
 }
 

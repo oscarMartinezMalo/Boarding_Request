@@ -71,15 +71,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
 
       // Open spinner and set it to disable
-      const dialogRef = this.dialog.open(SpinnerPopComponent, { width: '100px' });
+      const dialogRef = this.dialog.open(SpinnerPopComponent, { panelClass: 'spinner-no-background-color' });
       dialogRef.disableClose = true;
 
-      this.authService.emailPasswordSigninUser(this.loginForm.value).then(loggedinSuccess => {
-        console.log(loggedinSuccess);
-        loggedinSuccess ? this.router.navigate(['/request']) : this.loginForm.reset();
-      });
-
-
+      const loggedinSuccess = await this.authService.emailPasswordSigninUser(this.loginForm.value);
+      loggedinSuccess ? this.router.navigate(['/request']) : this.loginForm.reset();
 
       dialogRef.close();  // Close spinner after get respond from the API
     }
