@@ -9,9 +9,9 @@
   width: 200px;
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
-}
+// .sidenav .mat-toolbar {
+  // background: inherit;
+// }
 
 .mat-toolbar.mat-primary {
   position: sticky;
@@ -25,4 +25,22 @@
 
 .hidden{
   display: none;
+}
+
+.logo h1 {
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  border: 1.2px solid black;
+  border-radius: 50%;
+  font-size: 25px;
+  font-weight: bold;
+  padding-top : 1px;
+  margin-right: 4px;
+}
+
+p {
+  margin:0px;
+  font-size: 11px;
+  line-height: 15px;
 }

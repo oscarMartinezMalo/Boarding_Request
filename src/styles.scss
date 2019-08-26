@@ -17,3 +17,8 @@ body,html {
   background-color: transparent;
   box-shadow: none;
 } 
+
+.cdk-overlay-container .cdk-overlay-dark-backdrop {
+  transition-duration: 1s;
+  transition-timing-function: ease-in;
+}
