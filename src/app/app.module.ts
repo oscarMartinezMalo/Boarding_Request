@@ -43,6 +43,7 @@ import {
   MatMenuModule
 } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { NavegationBarComponent } from './navegation-bar/navegation-bar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     SpinnerPopComponent,
     LoginComponent,
     NavBarComponent,
-    RequestFormComponent],
+    RequestFormComponent,
+    NavegationBarComponent],
 
   imports: [
     BrowserModule,

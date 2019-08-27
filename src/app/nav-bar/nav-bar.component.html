@@ -13,8 +13,8 @@
       </ng-template>
 
       <ng-template [ngIf]='(auth.user | async)'>
-        <a mat-list-item routerLink="/" (click)='onLogout(); drawer.toggle()'>Log Out</a>
-        <a mat-list-item routerLink="/request" routerLinkActive="active" (click)="drawer.toggle()">Request</a>
+        <a mat-list-item routerLink="/" (click)='onLogout();'>Log Out</a>
+        <a mat-list-item routerLink="/request" routerLinkActive="active">Request</a>
       </ng-template>
     </mat-nav-list>
   </mat-sidenav>
