@@ -8,6 +8,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { CanReadGuard } from './guards/can-read.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { EmployeeGuard } from './guards/employee.guard';
+import { CalendarCustomComponent } from './calendar-custom/calendar-custom.component';
 
 
 const routes: Routes = [

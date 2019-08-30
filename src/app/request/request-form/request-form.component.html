@@ -20,7 +20,6 @@
           </div>
         </div>
 
-
         <div class="row">
           <!-- Expansion Panel -->
           <mat-accordion class="example-headers-align">
@@ -93,9 +92,16 @@
               </mat-expansion-panel-header>
 
               <mat-form-field>
-                <input matInput placeholder="Date" [matDatepicker]="picker" (focus)="picker.open()" formControlName="boardingDate">
+                <input matInput placeholder="Date" [matDatepicker]="picker" [matDatepickerFilter]="myFilter" (focus)="picker.open()" formControlName="boardingDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker  [dateClass]="dateClass"  #picker></mat-datepicker>
               </mat-form-field>
-              <mat-datepicker #picker></mat-datepicker>
+
+              <!-- This is a custom calendar where you pass the availables days and anables those days and higlight it -->
+              <!-- <app-calendar-custom [parentForm]="requestForm" formControlName="calendar"></app-calendar-custom> -->
+              <!-- <app-calendar-custom [dateAvailables]= "dateAvailables" [parentForm]="requestForm" formControlName="calendar"></app-calendar-custom> -->
+
+              <app-ship-name formControlName="shipName"></app-ship-name>
 
               <mat-action-row>
                 <button type="button" mat-button color="warn" (click)="prevStep()">Previous</button>

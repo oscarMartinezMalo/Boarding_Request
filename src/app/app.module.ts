@@ -40,10 +40,12 @@ import {
   MatSnackBarModule,
   MatExpansionModule,
   MatNativeDateModule,
-  MatMenuModule
+  MatMenuModule,
+  MatDatepickerModule
 } from '@angular/material';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import { NavegationBarComponent } from './navegation-bar/navegation-bar.component';
+import { CalendarCustomComponent } from './calendar-custom/calendar-custom.component';
+import { ShipNameComponent } from './ship-name/ship-name.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { NavegationBarComponent } from './navegation-bar/navegation-bar.componen
     LoginComponent,
     NavBarComponent,
     RequestFormComponent,
-    NavegationBarComponent],
+    NavegationBarComponent,
+    CalendarCustomComponent,
+    ShipNameComponent],
 
   imports: [
     BrowserModule,

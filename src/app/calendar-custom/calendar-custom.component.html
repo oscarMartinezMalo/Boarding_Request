@@ -1,0 +1,15 @@
+<!-- <form [formGroup]="calendarForm">
+    <mat-form-field>
+        <input matInput placeholder="Date" [matDatepicker]="picker" [matDatepickerFilter]="myFilter" (focus)="picker.open()"
+            formControlName="calendar">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+    </mat-form-field>
+</form> -->
+
+    <mat-form-field>
+        <input matInput placeholder="Date" [matDatepicker]="picker" [matDatepickerFilter]="myFilter" (focus)="picker.open()"
+        [formControl]="calendar">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+    </mat-form-field>
