@@ -1,5 +1,6 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, SelectControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatFormFieldControl } from '@angular/material';
 
 @Component({
   selector: 'app-ship-name',
@@ -33,10 +34,10 @@ export class ShipNameComponent implements ControlValueAccessor {
     this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
-    // throw new Error("Method not implemented.");
+    this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    // throw new Error("Method not implemented.");
+    this.disabled = isDisabled;
   }
 
 

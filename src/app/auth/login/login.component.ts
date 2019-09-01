@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   IMAGES_URL = './../../../assets/images/logos/black/';
 
   loginForm = this.fb.group({
+    shipDropdwon: [
+      null, Validators.required
+    ],
     email: [null, [
       Validators.required,
       Validators.email,
@@ -69,7 +72,7 @@ export class LoginComponent implements OnInit {
 
   async  onSubmit() {
     if (this.loginForm.valid) {
-
+      console.log(this.loginForm);
       // Open spinner and set it to disable
       const dialogRef = this.dialog.open(SpinnerPopComponent, { panelClass: 'spinner-no-background-color' });
       dialogRef.disableClose = true;

@@ -40,8 +40,9 @@ export class RequestFormComponent implements OnInit {
     boardingDate: [null, Validators.required],
     shipContact: [null, Validators.required],
     specialNeeds: ['no', Validators.required],
-    shipName: ['', Validators.required],
-    calendar: [null]
+    shipName: [null, Validators.required],
+    calendar: [null],
+    phoneNumber: [null, Validators.required]
   });
 
   dateAvailables;
@@ -81,7 +82,7 @@ export class RequestFormComponent implements OnInit {
   ////
 
   onSubmit() {
-    console.log(this.requestForm.controls);
+    console.log(this.requestForm.controls.phoneNumber.hasError('required'));
     if (this.requestForm.valid) {
       this.request.createRequest(this.requestForm.value);
     }

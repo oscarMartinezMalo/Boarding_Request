@@ -1,5 +1,6 @@
 <div class="mat-wrapper" fxLayout="column" fxLayoutAlign="center center" style="height: 80%">
     <mat-card fxLayout="column" fxLayoutAlign="start center">
+
         <mat-card-header>
             <mat-card-title [ngStyle]="{'color': 'var(--primary)'}">Login</mat-card-title>
         </mat-card-header>
@@ -9,6 +10,7 @@
         <mat-card-content>
             <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="example-form" fxLayout="column"
                 style="width: 350px; text-align: center; padding: 20px;">
+
                 <mat-form-field class="example-full-width">
                     <input matInput placeholder="Enter your email" formControlName="email" required>
                     <mat-error
@@ -43,7 +45,16 @@
                     </span>
 
                     <mat-error *ngIf="loginForm.hasError('required', 'ship')">Ship is required </mat-error>
-                </mat-form-field>
+                </mat-form-field>       
+
+
+
+                <!-- Creating a custom form field control -->
+                <mat-form-field class="example-full-width">
+                    <app-ship-dropdown placeholder="Ship Name"  formControlName="shipDropdwon" shipBrand="Zamara"></app-ship-dropdown>
+                    <mat-error *ngIf="loginForm.hasError('required', 'shipDropdwon')">Ship is required </mat-error>
+                </mat-form-field>           
+
 
                 <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Login</button>
 

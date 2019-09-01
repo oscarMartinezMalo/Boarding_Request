@@ -46,6 +46,8 @@ import {
 import { NavegationBarComponent } from './navegation-bar/navegation-bar.component';
 import { CalendarCustomComponent } from './calendar-custom/calendar-custom.component';
 import { ShipNameComponent } from './ship-name/ship-name.component';
+import { FormFieldCustomShipComponent } from './form-field-custom-ship/form-field-custom-ship.component';
+import { ShipDropdownComponent } from './ship-dropdown/ship-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { ShipNameComponent } from './ship-name/ship-name.component';
     RequestFormComponent,
     NavegationBarComponent,
     CalendarCustomComponent,
-    ShipNameComponent],
+    ShipNameComponent,
+    FormFieldCustomShipComponent,
+    ShipDropdownComponent],
 
   imports: [
     BrowserModule,
