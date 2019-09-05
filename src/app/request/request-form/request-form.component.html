@@ -5,9 +5,8 @@
         <mat-card-title>Create New Request</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-form-field fxLayout="column">
               <mat-select placeholder="Request Type" formControlName="requestType">
                 <mat-option *ngFor="let requestType of requestTypes" [value]="requestType.value">
                   {{ requestType.value }}
@@ -17,7 +16,16 @@
                 Request Type <strong>required</strong>
               </mat-error>
             </mat-form-field>
-          </div>
+            <mat-form-field fxLayout="column">
+              <mat-select placeholder="Request Type" formControlName="requestType">
+                <mat-option *ngFor="let requestType of requestTypes" [value]="requestType.value">
+                  {{ requestType.value }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="requestForm.controls['requestType'].hasError('required')">
+                Request Type <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
         </div>
 
         <div class="row">
@@ -157,15 +165,6 @@
           </mat-error>
           <!-- </mat-form-field> -->
         </div>
-
-
-
-
-
-
-
-
-
 
 
       </mat-card-content>

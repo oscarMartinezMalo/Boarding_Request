@@ -51,7 +51,8 @@
 
                 <!-- Creating a custom form field control -->
                 <mat-form-field class="example-full-width">
-                    <app-ship-dropdown placeholder="Ship Name"  formControlName="shipDropdwon" shipBrand="Zamara"></app-ship-dropdown>
+                    <app-ship-dropdown placeholder="Ship Name"  formControlName="shipDropdwon" shipBrand="{{this.loginForm.get('ship').value}}" [disabled]='true'></app-ship-dropdown>
+                    <!-- <app-ship-dropdown placeholder="Ship Name"  formControlName="shipDropdwon" shipBrand="Zamara" disabled="disabled"></app-ship-dropdown> -->
                     <mat-error *ngIf="loginForm.hasError('required', 'shipDropdwon')">Ship is required </mat-error>
                 </mat-form-field>           
 

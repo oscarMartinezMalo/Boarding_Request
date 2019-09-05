@@ -1,13 +1,13 @@
-import { Component, OnInit, forwardRef, Injector, DoCheck, ElementRef, OnDestroy, Optional, Self, Input, HostBinding, ɵConsole } from '@angular/core';
+import { Component, OnInit, DoCheck, ElementRef, OnDestroy, Optional, Self, Input, HostBinding } from '@angular/core';
 import { MatFormFieldControl } from '@angular/material';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl, FormGroup, FormBuilder } from '@angular/forms';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Subject } from 'rxjs';
 
-export class MyShip {
-  constructor(public shipName: string) { }
-}
+// export class MyShip {
+//   constructor(public shipName: string) { }
+// }
 
 @Component({
   selector: 'app-ship-dropdown',
@@ -24,27 +24,20 @@ export class MyShip {
   }
 })
 
-export class ShipDropdownComponent implements ControlValueAccessor, MatFormFieldControl<MyShip>, OnInit, OnDestroy, DoCheck {
-  
+export class ShipDropdownComponent implements ControlValueAccessor, MatFormFieldControl<string>, OnInit, OnDestroy, DoCheck {
+  // export class ShipDropdownComponent implements ControlValueAccessor, MatFormFieldControl<MyShip>, OnInit, OnDestroy, DoCheck {
   static nextId = 0;
-  private _placeholder: string;
-  private _required = false;
-  private _disabled = false;
-  autofilled?: boolean;
+  shipList: { value: string, name: string }[] = new Array<{ value: string, name: string }>();
 
-  shipList = [
-    { value: 'ry', name: 'royal' },
-    { value: 'ce', name: 'celebrity' },
-    { value: 'za', name: 'zamara' }
-  ];
+  focused = false;
+  errorState = false;
+  controlType = 'app-ship-dropdown';
+  autofilled?: boolean;
+  @HostBinding() id = `app-ship-dropdown-${ShipDropdownComponent.nextId++}`;
+  describedBy = '';
 
   shipForm: FormGroup;
   stateChanges = new Subject<void>();
-  focused = false;
-  errorState = false;
-  controlType = 'ship-name';
-  @HostBinding() id = `ship-dropdown-${ShipDropdownComponent.nextId++}`;
-  describedBy = '';
   onChange: (delta: any) => {};
   onTouched: () => {};
 
@@ -60,6 +53,8 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
     this._placeholder = value;
     this.stateChanges.next();
   }
+  // tslint:disable-next-line: variable-name
+  private _placeholder: string;
 
   @Input()
   get required(): boolean { return this._required; }
@@ -67,6 +62,8 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
     this._required = coerceBooleanProperty(value);
     this.stateChanges.next();
   }
+  // tslint:disable-next-line: variable-name
+  private _required = false;
 
   @Input()
   get disabled() { return this._disabled; }
@@ -75,23 +72,52 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
     this._disabled ? this.shipForm.disable() : this.shipForm.enable();
     this.stateChanges.next();
   }
+  // tslint:disable-next-line: variable-name
+  private _disabled = false;
 
   @Input()
-  get value(): MyShip | null {
+  get value(): string | null {
     const { value: { shipName } } = this.shipForm;
     if (shipName) {
-      return new MyShip(shipName);
+      // return new MyShip(shipName);
+      return shipName.value;
     }
     return null;
   }
-  set value(ship: MyShip | null) {
-    const { shipName } = ship || new MyShip('');
-    this.shipForm.setValue({ shipName });
+  // set value(ship: MyShip | null) {
+  set value(ship: string | null) {
+    // const { shipName } = ship || new MyShip('');
+    this.shipForm.get('shipName').setValue(ship);
     this.stateChanges.next();
   }
 
-  @Input() shipBrand: string;
+  @Input()
+  public get shipBrand(): string {
+    return this._shipBrand;
+  }
+  public set shipBrand(value: string) {
+    const oldShipBrand = this._shipBrand;
+    this._shipBrand = value;
 
+    // this.setValuesForShipList(oldShipBrand, this._shipBrand);
+  }
+  // tslint:disable-next-line: variable-name
+  private _shipBrand: string;
+
+
+  setValuesForShipList(oldBrand: string, brand: string): void {
+    if (oldBrand !== brand) {
+      this.value = null;
+      this.shipForm.reset();
+      this.onChange(null);
+    }
+    if (brand) {
+      this.shipForm.enable();
+      this.shipList = [{ value: 'ry', name: 'royal' }, { value: 'ce', name: 'celebrity' }, { value: 'za', name: 'zamara' }];
+    } else {
+      this.shipForm.disable();
+    }
+  }
 
   constructor(
     formBuilder: FormBuilder,
@@ -100,14 +126,17 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
     @Optional() @Self() public ngControl: NgControl) {
 
     this.shipForm = formBuilder.group({
+      // shipName: new FormControl({value: '', disabled: false})
       shipName: ''
     });
 
-    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+    fm.monitor(elRef, true).subscribe(origin => {
       if (this.focused && !origin) {
         this.onTouched();
       }
+
       this.focused = !!origin;
+      
       this.stateChanges.next();
     });
 
@@ -117,7 +146,7 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
   }
 
   ngOnInit(): void {
-    console.log(this.shipBrand);
+    // console.log(this.shipBrand);
   }
 
   ngOnDestroy() {
@@ -143,8 +172,10 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
     }
   }
 
-  writeValue(val: MyShip | null): void {
+  writeValue(val: any | null): void {
+    // writeValue(val: MyShip | null): void {
     this.value = val;
+    // this.shipForm.reset();
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -152,10 +183,12 @@ export class ShipDropdownComponent implements ControlValueAccessor, MatFormField
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
+    // this._disabled = isDisabled;
     this.disabled = isDisabled;
   }
   handleInput(): void {
-    this.onChange(this.shipForm.value);
+    // this.onChange(this.shipForm.value);
+    this.onChange(this.shipForm.controls.shipName.value);
   }
 }
