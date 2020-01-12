@@ -15,6 +15,23 @@ export class RequestService {
 
   userId: string;
 
+  datesAvailable: {date: string}[] = [
+      { date: '8/30/2019' },
+      { date: '8/20/2019' },
+      // { date: '8/9/2019' },
+      // { date: '8/6/2018' },
+      // { date: '8/1/2019' },
+      // { date: '8/25/2019' },
+      // { date: '8/3/2019' },
+      // { date: '8/17/2019' },
+      // { date: '8/4/2019' },
+      // { date: '8/16/2019' },
+      // { date: '8/24/2019' },
+      // { date: '8/21/2019' },
+      // { date: '8/9/2019' },
+      // { date: '8/28/2019' }
+    ];
+
   constructor(
     private afs: AngularFirestore,
     private auth: AuthService,
@@ -23,6 +40,14 @@ export class RequestService {
     auth.user.pipe(map(user => {
       this.userId = _.get(user, 'uid');
     })).subscribe();
+  }
+
+  async getDayOnPort(month: number, year: number) {
+    return await new Promise(res => {
+      setTimeout(() => {
+        res(this.datesAvailable);
+      }, 2000);
+    });
   }
 
   getRequests() {
@@ -36,7 +61,7 @@ export class RequestService {
   //// User Actions
 
   async createRequest(fleetRequest: FleetRequest) {
-    console.log("hel");
+
     if (this.auth.canCreate && this.userId) {
       // Add a new document in collection "fleetRequests" with document having 'userId'
       fleetRequest.userId = this.userId;

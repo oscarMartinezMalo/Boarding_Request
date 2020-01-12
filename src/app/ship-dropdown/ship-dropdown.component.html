@@ -1,0 +1,11 @@
+<form [formGroup]="shipForm">
+  <mat-select formControlName="shipName" (selectionChange)="handleInput()">
+      <mat-option>--Select--</mat-option>
+    <mat-option *ngFor="let oneShip of shipList" [value]="oneShip.name">
+      {{oneShip.name}}
+    </mat-option>
+  </mat-select>
+</form>
+
+<!-- <mat-select formControlName= "shipName" (selectionChange)="onChange($event.value)" [disabled]="disabled"
+(blur)="onTouched"> -->

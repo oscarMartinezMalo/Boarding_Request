@@ -7,9 +7,10 @@ import { RequestFormComponent } from './request/request-form/request-form.compon
 import { AdminGuard } from './guards/admin.guard';
 import { CanReadGuard } from './guards/can-read.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { WorkerGuard } from './guards/worker.guard';
 import { RequestListComponent } from './request-list/request-list.component';
 import { RequestTableComponent } from './request-table/request-table.component';
+import { EmployeeGuard } from './guards/employee.guard';
+import { CalendarCustomComponent } from './calendar-custom/calendar-custom.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
   {
     path: 'request',
     component: RequestFormComponent,
-    canActivate: [WorkerGuard]
+    canActivate: [EmployeeGuard]
   },
   {
     path: 'ships',
@@ -34,8 +35,7 @@ const routes: Routes = [
   ,
   {
     path: 'requestTable',
-    component: RequestTableComponent,
-    canActivate: [WorkerGuard]
+    component: RequestTableComponent
   }
 ];
 

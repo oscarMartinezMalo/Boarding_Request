@@ -1,0 +1,79 @@
+<mat-toolbar color="secondary">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+  <div class="logo" fxLayout="column" fxLayoutAlign="space-around center">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <h1>F</h1>
+      <h1>V</h1>
+      <h1>R</h1>
+    </div>
+    <p>
+      FLEET VISIT REQUEST
+    </p>
+  </div>
+  <span class="spacer"></span>
+
+  <!-- User is logged -->
+  <div *ngIf='(auth.user | async) as user; else accountNotLogged'>
+
+    <!-- Display user name in the navbar when is not Handset -->
+    <a class="user-email-style" *ngIf='!(isHandset$ | async)'>{{user.email}}</a>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button type="button" [routerLink]="['/']" *ngIf='(isHandset$ | async)' routerLinkActive="active" mat-menu-item>
+        <span>{{user.email}}</span>
+      </button>
+
+      <button type="button" routerLink="/" (click)="onLogout()" mat-menu-item>
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <ng-template #accountNotLogged>
+    <!-- Vertical dots icon -->
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button type="button" [routerLink]="['/login']" routerLinkActive="active" mat-menu-item>
+        <span>Login</span>
+      </button>
+    </mat-menu>
+  </ng-template>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #drawer color="secondary" class="sidenav" opened="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <a mat-list-item href="#">New Request</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">My Requests</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">My approvals</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">My Requests</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">My Requests</a>
+      <mat-divider></mat-divider>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

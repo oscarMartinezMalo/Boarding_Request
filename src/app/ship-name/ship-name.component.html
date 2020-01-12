@@ -1,0 +1,17 @@
+<!-- <h4>Ship Name</h4>
+<mat-form-field>
+  <mat-label>Select a ship</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let ship of ships"  [value]="ship.name" (select)="onChange($event.target.value)">
+      {{ship.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+<!-- <mat-label>Select a ship</mat-label> -->
+<mat-select placeholder="Select Ship Name" (selectionChange)="onChange($event.value)" [disabled]="disabled"
+  (blur)="onTouched">
+  <mat-option *ngFor="let ship of ships" [value]="ship.name">
+    {{ship.name}}
+  </mat-option>
+</mat-select>

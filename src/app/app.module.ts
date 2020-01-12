@@ -39,16 +39,23 @@ import {
   MatDialogModule,
   MatSnackBarModule,
   MatExpansionModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatMenuModule,
+  MatDatepickerModule
 } from '@angular/material';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+
 import { RequestListComponent } from './request-list/request-list.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatMenuModule } from '@angular/material/menu';
 import { RequestTableComponent } from './request-table/request-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+
+import { NavegationBarComponent } from './navegation-bar/navegation-bar.component';
+import { CalendarCustomComponent } from './calendar-custom/calendar-custom.component';
+import { ShipNameComponent } from './ship-name/ship-name.component';
+import { FormFieldCustomShipComponent } from './form-field-custom-ship/form-field-custom-ship.component';
+import { ShipDropdownComponent } from './ship-dropdown/ship-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +66,13 @@ import { MatSortModule } from '@angular/material/sort';
     LoginComponent,
     NavBarComponent,
     RequestFormComponent,
-    RequestListComponent,
-    RequestTableComponent],
+    NavegationBarComponent,
+    CalendarCustomComponent,
+    ShipNameComponent,
+    FormFieldCustomShipComponent,
+    ShipDropdownComponent,
+    RequestTableComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -83,7 +95,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatNativeDateModule,
     MatExpansionModule,
     MatDatepickerModule,
-    AngularFireModule.initializeApp(environment.firebase, 'ng-wallet-expenses'),
+    MatMenuModule,
+    AngularFireModule.initializeApp(environment.firebase, "ng-wallet-expenses"),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
@@ -95,11 +108,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule
   ],
-  entryComponents: [
-    LoginComponent,
-    SpinnerPopComponent
-  ],
+  entryComponents: [LoginComponent, SpinnerPopComponent],
   providers: [HubClientService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
