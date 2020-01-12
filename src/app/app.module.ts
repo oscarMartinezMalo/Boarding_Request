@@ -42,6 +42,13 @@ import {
   MatNativeDateModule
 } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { RequestListComponent } from './request-list/request-list.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatMenuModule } from '@angular/material/menu';
+import { RequestTableComponent } from './request-table/request-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -51,7 +58,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     SpinnerPopComponent,
     LoginComponent,
     NavBarComponent,
-    RequestFormComponent],
+    RequestFormComponent,
+    RequestListComponent,
+    RequestTableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -79,7 +88,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AngularFireDatabaseModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatGridListModule,
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   entryComponents: [
     LoginComponent,

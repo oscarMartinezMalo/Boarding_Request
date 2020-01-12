@@ -12,16 +12,16 @@ export class ShipCardCollectionComponent implements OnInit {
 
   private shipLength: number;
   private ships: IShip[] = new Array<IShip>();
-  
-  constructor( private client: HubClientService) {   }
+
+  constructor(private client: HubClientService) { }
 
   async ngOnInit() {
-    (await this.client.shipsByBrand("Just return everything")).forEach(ship=>{
+    (await this.client.shipsByBrand('Just return everything')).forEach(ship => {
       this.ships.push(ship);
-    });  
+    });
   }
 
-  public columns():number{
+  public columns(): number {
     return 3;
   }
 
